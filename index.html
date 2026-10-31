@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080914">
+<title>THE INFINITE ARCHIVE — ein Ende gibt es nicht</title>
+<style>
+:root{--bg:#080914;--panel:#111426;--ink:#f5f4ff;--muted:#a5a7c5;--violet:#9d7bff;--cyan:#72f5e5;--pink:#ff78bd}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;background:radial-gradient(circle at 15% 10%,#33236c55,transparent 34%),radial-gradient(circle at 90% 45%,#174f5c33,transparent 32%),#080914}
+button{font:inherit;cursor:pointer}
+.nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px clamp(15px,4vw,48px);background:#080914dc;border-bottom:1px solid #ffffff15;backdrop-filter:blur(18px)}
+.logo{font-size:14px;font-weight:950;letter-spacing:.16em}.logo b{color:var(--cyan)}
+.nav-right{display:flex;align-items:center;gap:9px}.badge{border:1px solid #ffffff20;border-radius:99px;padding:8px 11px;color:var(--muted);font-size:12px}
+.btn{border:1px solid #ffffff26;border-radius:12px;padding:11px 15px;background:#ffffff0c;color:var(--ink);font-weight:800;transition:.2s}
+.btn:hover{transform:translateY(-2px);border-color:var(--cyan);background:#72f5e51b}
+.btn-main{background:var(--cyan);color:#071014;border-color:var(--cyan)}
+.hero{min-height:87vh;display:grid;place-items:center;text-align:center;position:relative;overflow:hidden;padding:70px 18px 65px;isolation:isolate}
+.hero:before{content:"";position:absolute;width:min(78vw,700px);aspect-ratio:1;border-radius:50%;z-index:-1;background:radial-gradient(circle at 50% 50%,#8d70ff30 0 12%,#5d47c51c 25%,transparent 68%);border:1px solid #9d7bff1c;box-shadow:0 0 120px #6548df20;animation:orbit 26s linear infinite}
+.orbit{position:absolute;width:min(58vw,470px);aspect-ratio:1;border:1px solid #72f5e52b;border-radius:50%;z-index:-1;transform:rotateX(68deg);box-shadow:0 0 40px #72f5e511}
+.orbit:after{content:"";position:absolute;top:5%;left:17%;width:13px;height:13px;background:var(--cyan);border-radius:50%;box-shadow:0 0 30px var(--cyan)}
+.kicker{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff20;border-radius:99px;padding:8px 13px;color:var(--cyan);font-size:11px;letter-spacing:.16em;font-weight:900;text-transform:uppercase;background:#ffffff06}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan)}
+h1{font-size:clamp(3rem,10.5vw,8.7rem);line-height:.88;letter-spacing:-.09em;margin:27px 0 22px;font-weight:1000}
+h1 span{display:block;color:transparent;-webkit-text-stroke:1px #c7bbff;background:linear-gradient(100deg,var(--cyan),#a38aff 50%,var(--pink));background-clip:text;-webkit-background-clip:text}
+.intro{max-width:620px;margin:0 auto;color:#b9bad2;font-size:clamp(16px,2vw,20px);line-height:1.7}
+.hero-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:26px}
+.metrics{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:32px}
+.metric{min-width:115px;padding:12px 16px;border:1px solid #ffffff17;border-radius:14px;background:#ffffff07;text-align:left}
+.metric strong{display:block;font-size:22px;letter-spacing:-.04em}.metric small{color:var(--muted);font-size:11px}
+.wrap{width:min(1180px,100%);margin:auto;padding:25px 17px 80px}
+.section-top{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin:25px 0 20px}
+.section-top h2{font-size:clamp(27px,5vw,43px);letter-spacing:-.06em;margin:0}
+.section-top p{margin:7px 0 0;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.card{min-width:0;overflow:hidden;border:1px solid #ffffff16;border-radius:20px;background:linear-gradient(145deg,#15182c,#0d1020);animation:appear .5s both}
+.art{height:220px;position:relative;display:grid;place-items:center;overflow:hidden;background:#15152a}
+.art img{position:absolute;width:100%;height:100%;object-fit:cover;opacity:.66;transition:transform .6s,opacity .4s}
+.card:hover .art img{transform:scale(1.07);opacity:.86}
+.art:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0d1020d9,transparent 70%)}
+.glyph{position:relative;z-index:1;font-size:clamp(55px,8vw,90px);filter:drop-shadow(0 8px 20px #0008);transition:transform .3s}
+.card:hover .glyph{transform:translateY(-5px) rotate(-5deg)}
+.num{position:absolute;z-index:2;top:12px;left:12px;padding:6px 9px;border:1px solid #ffffff25;background:#080914b8;border-radius:8px;font-size:10px;letter-spacing:.13em;color:var(--cyan)}
+.cardbody{padding:17px 17px 18px}.category{font-size:10px;color:var(--pink);font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+.card h3{font-size:21px;letter-spacing:-.04em;margin:8px 0}.card p{color:#aeb0c9;line-height:1.6;font-size:14px;margin:0 0 16px}
+.cardfoot{display:flex;justify-content:space-between;align-items:center;gap:8px;border-top:1px solid #ffffff12;padding-top:12px;color:#7f83a6;font-size:11px}
+.react{border:1px solid #ffffff1c;border-radius:99px;background:#ffffff08;color:#e5e5ff;padding:7px 10px;font-size:12px}
+.interlude{margin:22px 0 28px;border:1px solid #ffffff18;border-radius:22px;padding:clamp(22px,5vw,42px);background:radial-gradient(circle at 10% 10%,#9d7bff20,transparent 45%),linear-gradient(110deg,#111426,#0d1825);text-align:center}
+.interlude small{color:var(--cyan);font-size:10px;letter-spacing:.2em;font-weight:900}
+.interlude blockquote{font-size:clamp(22px,4.2vw,40px);letter-spacing:-.05em;font-weight:850;max-width:780px;margin:17px auto 22px}
+#loader{padding:40px 12px;text-align:center;color:var(--muted)}.loader-ring{font-size:32px;display:inline-block;animation:spin 2s linear infinite}
+footer{padding:35px 16px 55px;border-top:1px solid #ffffff14;text-align:center;color:#8588a9;font-size:13px}
+footer strong{color:var(--cyan);letter-spacing:.12em}
+#toast{position:fixed;z-index:40;bottom:22px;left:50%;transform:translate(-50%,18px);opacity:0;pointer-events:none;transition:.25s;background:var(--cyan);color:#071014;border-radius:12px;padding:12px 16px;font-size:13px;font-weight:900;max-width:90vw;text-align:center;box-shadow:0 12px 40px #0008}#toast.show{opacity:1;transform:translate(-50%,0)}
+#spark{position:fixed;inset:0;z-index:30;pointer-events:none;display:none;background:radial-gradient(circle at center,#72f5e52c,transparent 60%)}body.pulse #spark{display:block;animation:pulse .7s ease-out}
+@keyframes orbit{to{transform:rotate(360deg)}}@keyframes spin{to{transform:rotate(360deg)}}@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}@keyframes pulse{from{opacity:1}to{opacity:0}}
+@media(max-width:850px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.art{height:200px}}
+@media(max-width:540px){.grid{grid-template-columns:1fr}.art{height:245px}.hero{min-height:84vh}.badge{display:none}.nav{padding:12px 14px}.card h3{font-size:23px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="nav"><div class="logo">THE <b>INFINITE</b> ARCHIVE</div><div class="nav-right"><span class="badge">NO FINAL PAGE FOUND</span><button class="btn" id="warp">WARP MODE ↗</button></div></header>
+<section class="hero" id="home"><div class="orbit"></div><div>
+<div class="kicker"><span class="dot"></span> ARCHIVE STATUS: NEVERENDING</div>
+<h1>WELCOME TO<br><span>NOWHERE.</span></h1>
+<p class="intro">Ein digitales Universum voller seltsamer Fundstücke, unmöglicher Orte und Dinge, die es eigentlich nicht geben dürfte. Jeder Scroll öffnet ein neues Kapitel. Es gibt keine letzte Seite.</p>
+<div class="hero-actions"><button class="btn btn-main" id="dive">INS UNBEKANNTE TAUCHEN ↓</button><button class="btn" id="random">ZUFALLSPORTAL ÖFFNEN ⊹</button></div>
+<div class="metrics"><div class="metric"><strong id="items">0</strong><small>ARCHIV-EINTRÄGE</small></div><div class="metric"><strong id="depth">0</strong><small>DIMENSIONEN ERKUNDET</small></div><div class="metric"><strong>∞</strong><small>LETZTE SEITE</small></div></div>
+</div></section>
+<main class="wrap" id="archive">
+<div class="section-top"><div><h2>Fundstücke aus dem Nirgendwo</h2><p>Jedes Objekt stammt aus einer anderen Ecke des Unbekannten.</p></div><button class="btn" id="more">+ 12 NEUE FUNDSTÜCKE</button></div>
+<div class="grid" id="grid"></div>
+<div class="interlude"><small>TRANSMISSION AUS DEM LEEREN</small><blockquote id="message">„Vielleicht bist du nicht verloren. Vielleicht ist die Karte einfach noch nicht fertig.“</blockquote><button class="btn" id="signal">NEUE TRANSMISSION EMPFANGEN ↻</button></div>
+<div class="grid" id="grid2"></div>
+<div id="loader"><span class="loader-ring">◉</span><p>Neue Dimension wird kartografiert …</p></div>
+</main>
+<footer><p><strong>THE INFINITE ARCHIVE</strong></p><p>Es gibt keinen Ausgang. Nur neue Eingänge.</p><button class="btn" id="top">Zurück zum Ursprung ↑</button></footer>
+<div id="toast" role="status" aria-live="polite"></div><div id="spark"></div>
+<script>
+const entries=[
+["Die schlafende Sonne","Ein Stern, der beschlossen hat, heute einfach mal nicht zu leuchten.","☀️","KOSMOS"],
+["Zimmer Nummer 0","Eine Tür, hinter der sich exakt der Raum befindet, in dem du gerade stehst.","🚪","ARCHITEKTUR"],
+["Der Ozean über den Wolken","Dort schwimmen Wale durch Gewitter und sammeln verlorene Träume.","🐋","PARALLELWELT"],
+["Eine Uhr ohne Zeit","Sie zeigt immer den Moment, in dem du sie ansiehst.","⌛","ARTEFAKT"],
+["Der letzte Briefkasten","Er liefert Post an Menschen, die es noch gar nicht gibt.","📮","MYSTERIUM"],
+["Die Stadt aus Glas","Nachts leuchten ihre Straßen wie eingefrorene Blitze.","🏙️","ORT"],
+["Der kleine schwarze Stern","Er zieht keine Materie an. Nur schlechte Ideen.","✦","KOSMOS"],
+["Ein Fahrstuhl ins Gestern","Taste drücken, aussteigen, sich wundern. Rückfahrt unklar.","🛗","ZEITREISE"],
+["Der Garten der Monde","Jeder Mond dort wächst aus einer vergessenen Erinnerung.","🌙","BOTANIK"],
+["Das Museum der Geräusche","In Raum 7 wird die Stille von vor 400 Jahren ausgestellt.","🎧","KULTUR"],
+["Ein sehr altes WLAN","Das Passwort lautet angeblich: „damals-war-alles-anders“.","📡","TECHNOLOGIE"],
+["Die schwebende Bibliothek","Ihre Bücher schreiben sich selbst weiter, wenn niemand liest.","📚","WISSEN"],
+["Der Regenbogen-Fehler","Ein Glitch im Himmel, der seit 9 Milliarden Jahren nicht behoben wurde.","🌈","SYSTEMFEHLER"],
+["Der Planet aus Papier","Seine Bewohner falten ihre Berge bei schlechtem Wetter neu.","🪐","GEOGRAFIE"],
+["Das Hotel für Schatten","Jeder Gast bekommt ein Zimmer, das heller ist als er selbst.","🏨","REISE"],
+["Der vergessene Roboter","Er sucht seit Jahrhunderten nach dem Update für Gefühle.","🤖","MASCHINE"],
+["Das Fenster ins Vielleicht","Hinter der Scheibe sieht man eine Entscheidung, die man nie getroffen hat.","🪟","MÖGLICHKEIT"],
+["Der Komet mit Heimweh","Er dreht jede Runde ein bisschen langsamer, um länger zu bleiben.","☄️","KOSMOS"],
+["Das Café am Ende der Karte","Der Kaffee ist unendlich. Die Rechnung leider auch.","☕","GENUSS"],
+["Die Insel, die wandert","Sie taucht jede Nacht an einem anderen Ort in der Welt auf.","🏝️","ENTDECKUNG"],
+["Ein Stern in der Hosentasche","Er leuchtet nur, wenn man wirklich Hilfe braucht.","✨","ARTEFAKT"],
+["Der Bahnhof nirgendwo","Züge fahren ein, bevor sie überhaupt losgefahren sind.","🚉","TRANSIT"],
+["Das Archiv der Träume","Hier werden Träume gespeichert, die man morgens vergessen hat.","🗃️","GEDÄCHTNIS"],
+["Der unsichtbare Berg","Alle sind sich einig, dass er riesig ist. Niemand kann ihn sehen.","⛰️","PARADOX"]
+];
+const artImages=[
+"https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=900&q=80",
+"https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=900&q=80",
+"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=900&q=80",
+"https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=900&q=80",
+"https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=900&q=80",
+"https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=900&q=80"
+];
+const transmissions=[
+"„Vielleicht bist du nicht verloren. Vielleicht ist die Karte einfach noch nicht fertig.“",
+"„Die Sterne sind nur Punkte, bis du ihnen eine Geschichte gibst.“",
+"„Irgendwo existiert eine Version von dir, die schon weiß, wie es ausgeht.“",
+"„Nicht jedes Portal führt woanders hin. Manche zeigen dir nur eine neue Richtung.“",
+"„Das Universum ist groß. Deine nächste gute Idee darf trotzdem klein anfangen.“",
+"„Wenn du das hier liest, hat das Nirgendwo gerade kurz Hallo gesagt.“",
+"„Es gibt Dinge, die findet man nur, wenn man aufhört, danach zu suchen.“"
+];
+let total=0,depth=0,loading=false,warping=false,toastTimer,seen=new Set();
+const grid=document.getElementById("grid"),grid2=document.getElementById("grid2");
+const toast=document.getElementById("toast");
+function notify(t){toast.textContent=t;toast.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove("show"),2400)}
+function makeCard(item,index){
+const [title,desc,glyph,category]=item;const img=(index%3===0||index%5===2)?artImages[(index*7+Math.floor(index/entries.length))%artImages.length]:"";
+const id="entry-"+index;
+return '<article class="card" id="'+id+'"><div class="art" style="background:radial-gradient(circle at 40% 35%,hsl('+(index*37%360)+' 55% 30%),#101124)">'+(img?'<img loading="lazy" src="'+img+'" alt="Atmosphärisches Bild" onerror="this.remove()">':'')+'<span class="glyph">'+glyph+'</span><span class="num">FILE / '+String(index+1).padStart(4,"0")+'</span></div><div class="cardbody"><span class="category">'+category+'</span><h3>'+title+'</h3><p>'+desc+'</p><div class="cardfoot"><span>ARCHIVE OBJECT · '+(index%9+1)+'% UNKNOWN</span><button class="react" data-react="'+index+'">✧ Untersuchen</button></div></div></article>';
+}
+function addBatch(n=12){
+let out=[];for(let i=0;i<n;i++){let index=total++;let item=entries[(index*7+Math.floor(index/entries.length)*3)%entries.length];out.push(makeCard(item,index))}
+const target=total%2===0?grid:grid2;target.insertAdjacentHTML("beforeend",out.join(""));
+document.getElementById("items").textContent=total.toLocaleString("de-DE");
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-react]");if(!b)return;const id=b.dataset.react;if(seen.has(id)){notify("Dieses Fundstück wurde bereits untersucht.");return}seen.add(id);b.textContent="✓ Untersucht";b.style.color="var(--cyan)";depth++;document.getElementById("depth").textContent=depth;notify(["Datenfragment gesichert.","Eine neue Dimension wurde kartiert.","Das Archiv hat dich bemerkt.","Fundstück erfolgreich entschlüsselt."][depth%4]);});
+document.getElementById("more").addEventListener("click",()=>{addBatch(12);notify("12 neue Dateien im Archiv gefunden.");});
+document.getElementById("dive").addEventListener("click",()=>document.getElementById("archive").scrollIntoView({behavior:"smooth"}));
+document.getElementById("random").addEventListener("click",()=>{const cards=document.querySelectorAll(".card");if(!cards.length)return;cards[Math.floor(Math.random()*cards.length)].scrollIntoView({behavior:"smooth",block:"center"});document.body.classList.remove("pulse");void document.body.offsetWidth;document.body.classList.add("pulse");notify("Zufallsportal geöffnet.");});
+document.getElementById("signal").addEventListener("click",()=>{let old=document.getElementById("message").textContent;let t;do{t=transmissions[Math.floor(Math.random()*transmissions.length)]}while(t===old);document.getElementById("message").textContent=t;notify("Signal empfangen.");});
+document.getElementById("top").addEventListener("click",()=>window.scrollTo({top:0,behavior:"smooth"}));
+document.getElementById("warp").addEventListener("click",()=>{if(warping)return;warping=true;document.body.classList.remove("pulse");void document.body.offsetWidth;document.body.classList.add("pulse");addBatch(6);window.scrollBy({top:Math.max(500,window.innerHeight*.8),behavior:"smooth"});notify("WARP SPRUNG AUSGEFÜHRT.");setTimeout(()=>warping=false,900)});
+let lastY=0;window.addEventListener("scroll",()=>{const y=window.scrollY;document.getElementById("depth").textContent=depth+Math.floor(y/1800);lastY=y},{passive:true});
+addBatch(12);addBatch(6);
+const loader=document.getElementById("loader");
+if("IntersectionObserver" in window){const observer=new IntersectionObserver(es=>{if(es.some(x=>x.isIntersecting)&&!loading){loading=true;setTimeout(()=>{addBatch(12);loading=false},300)}},{rootMargin:"850px"});observer.observe(loader)}
+else{window.addEventListener("scroll",()=>{if(!loading&&window.innerHeight+window.scrollY>document.documentElement.scrollHeight-900){loading=true;addBatch(12);loading=false}})}
+</script>
+</body>
+</html>
